@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
+>
+    <title>Productos</title>
+</head>
+<body>
+    <h1>Productos</h1>
+    <div id="productos"></div>
+
+    <script>
+        async function cargarProductos() {
+    const response = await fetch('/productos');
+    const productos = await response.json();
+
+    const contenedor = document.getElementById('productos');
+    productos.forEach(producto => {
+        // Creamos el contenedor del producto
+        const elemento = document.createElement('div');
+        elemento.classList.add('container'); // Clase de Bulma para contenedores con un borde y sombra sutil
+
+        // Usamos template strings para incluir las clases de Bulma en el HTML del producto
+        elemento.innerHTML = `
+            <h2 class="subtitle">${producto.nombre}</h2>
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <img src="${producto.imgSrc}" alt="${producto.nombre}">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <p class="title is-4">${producto.precio}</p>
+                </div>
+            </div>
+        `;
+
+        // Añadimos el producto al contenedor
+        contenedor.appendChild(elemento);
+    });
+}
+
+cargarProductos();
+
+    </script>
+</body>
+</html>
